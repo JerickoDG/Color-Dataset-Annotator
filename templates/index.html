@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Color Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+        .color-cell {
+            width: 30px;
+            height: 30px;
+        }
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+    </style>
+</head>
+<body style="background-color: beige;">
+    {% if update_success %}
+    <div class="alert" role="alert">
+        <strong>Success!</strong> Color data updated successfully!
+    </div>
+    {% endif %}
+
+
+    <h1>Color Table</h1>
+
+    <form method="POST" action="{{ url_for('update_colors') }}">
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>red</th>
+                    <th>green</th>
+                    <th>blue</th>
+                    <th>label</th>
+                    <th>Color Preview</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for color in colors_data %}
+                    <tr>
+                        <td>{{ loop.index }}.)</td>
+                        <td><input type="hidden" name="red[]" value="{{ color.red }}">{{ color.red }}</td>
+                        <td><input type="hidden" name="green[]" value="{{ color.green }}">{{ color.green }}</td>
+                        <td><input type="hidden" name="blue[]" value="{{ color.blue }}">{{ color.blue }}</td>
+                        <td>
+                            <input type="text" name="label[]" value="{{ color.label }}">
+                        </td>
+                        <td bgcolor="{{ color.HexCode }}"><input type="hidden" name="hexCode[]" value="{{ color.HexCode }}">{{ color.HexCode }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <!-- <button type="submit">Update Color Names</button> -->
+            <input type="submit" value="Submit Changes" style="margin-bottom: 5px;">
+        </table>
+        <input type="submit" value="Submit Changes" style="margin-top: 5px; margin-bottom: 5px;">
+    </form>
+</body>
+</html>
